@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2012/04/27 11:44:41.000.141,=C:\Users\Rafael Fortunatti\Documents\RAD Studio\Projects\AppletModule1.cpp</Transaction>
+    <Transaction>2012/05/26 08:24:07.000.171,=C:\Users\Rafael Fortunatti\Documents\RAD Studio\Projects\File2.cpp</Transaction>
+    <Transaction>2012/05/26 11:42:08.000.050,C:\Users\Rafael Fortunatti\Documents\RAD Studio\Projects\File2.cpp=C:\STUFF\Dropbox\Programming\C-C++\JogodaVelha\main.cpp</Transaction>
+    <Transaction>2012/05/26 11:42:16.000.188,C:\Users\Rafael Fortunatti\Documents\RAD Studio\Projects\Project1.cbproj=C:\STUFF\Dropbox\Programming\C-C++\JogodaVelha\JogodaVelha.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

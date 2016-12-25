@@ -1,0 +1,156 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//Minha convenção valor-símbolo:
+// 0 = Linha, valor nulo; 1 = X, símbolo do jogador; 2 = O, símbolo do comp.
+
+void Imprime_Tabuleiro (int vL1[], int vL2[], int vL3[]);
+void Constroi_Tabuleiro (int vL1[], int vL2[], int vL3[]);
+void Computa_Jogada (int vL1[], int vL2[], int vL3[], int opcLinha, int opcCol,
+	int identificador);
+void Rodada_PC (int vL1[], int vL2[], int vL3[]);
+
+int main ()
+{
+	int vL1[3], vL2[3], vL3[3], opcLinha, opcCol;
+
+	printf ("Bem vindo ao jogo da velha\n--------------------------------\n");
+	Constroi_Tabuleiro (vL1, vL2, vL3);
+	do
+	{
+		printf ("\n");
+		Imprime_Tabuleiro (vL1, vL2, vL3);
+		printf ("\nEntre com sua jogada: ");
+		scanf ("%d %d", &opcLinha, &opcCol);
+		Computa_Jogada (vL1, vL2, vL3, opcLinha, opcCol, 0);
+		Rodada_PC (vL1, vL2, vL3);
+	}while (opcLinha > 0);
+}
+
+void Constroi_Tabuleiro (int vL1[], int vL2[], int vL3[])
+{
+	for (int i = 0; i < 3; i++) {
+		vL1[i] = 0;
+		vL2[i] = 0;
+		vL3[i] = 0;
+	}
+}
+
+void Imprime_Tabuleiro (int vL1[], int vL2[], int vL3[])
+{
+	//Um ponteiro para modificar o vetor-alvo. Assim não preciso
+	//criar três laços -- apenas repito e altero o valor do ponteiro.
+	int *vetor;
+	vetor = vL1;
+
+	for (int j = 1; j <= 3; j++) {
+		for (int i = 0; i < 3; i++) {
+			switch (vetor[i]) {
+			case 0:
+				printf ("- ");
+				break;
+			case 1:
+				printf ("X ");
+				break;
+			case 2:
+				printf ("O ");
+				break;
+			}
+			if (vetor == vL1 && i == 2) {
+			printf ("\n");
+			vetor = vL2;
+			break;
+			}
+			if (vetor == vL2 && i == 2) {
+			printf ("\n");
+			vetor = vL3;
+			break;
+			}
+
+		}
+	}
+
+}
+
+void Computa_Jogada (int vL1[], int vL2[], int vL3[], int opcLinha, int opcCol,
+int identificador)
+{
+	//A variável identificador diz para esta função se quem mandou os valores
+	//foi o usuário ou o PC. 0 para usuário e 1 para PC.
+	//Usuário:
+	if (identificador == 0) {
+		if (opcLinha == 1) {
+		vL1[opcCol - 1] = 1;
+		return;
+		}
+
+		if (opcLinha == 2) {
+		vL2[opcCol - 1] = 1;
+		return;
+		}
+
+		if (opcLinha == 3) {
+		vL3[opcCol - 1] = 1;
+		return;
+		}
+	}
+	//PC:
+	if (identificador == 1) {
+		if (opcLinha == 1) {
+		vL1[opcCol - 1] = 2;
+		return;
+		}
+
+		if (opcLinha == 2) {
+		vL2[opcCol - 1] = 2;
+		return;
+		}
+
+		if (opcLinha == 3) {
+		vL3[opcCol - 1] = 2;
+		return;
+		}
+	}
+}
+
+void Rodada_PC (int vL1[], int vL2[], int vL3[])
+{
+	//A idéia é o computador gerar dois valores randômicos. Estes serão os parâ-
+	//-metro que o usuário também passa, mas aqui haverá verificação se a opção
+	//já foi utilizada. Caso positivo, os valores são gerados novamente até
+	//obter uma posição não utilizada. Assim que valores válidos são gerados,
+	//a função Computa_Jogada é chamada com identificador 1;
+
+	int opcLinhaPC, opcColPC, *pont;
+
+	do
+	{
+		srand (time(NULL) + 35) ;
+		opcLinhaPC = (rand () % 3) + 1;
+
+		srand (time(NULL) + 1245) ;
+		opcColPC = (rand () % 3) + 1;
+
+		switch (opcLinhaPC) {
+			case 1:
+			pont = vL1;
+			break;
+
+			case 2:
+			pont = vL2;
+			break;
+
+			case 3:
+			pont = vL3;
+			break;
+		}
+		if (pont[opcColPC - 1] == 1 || pont[opcColPC - 1] == 2) {
+			continue;
+		}else
+		{
+			break;
+		}
+	}while (4);
+
+	Computa_Jogada (vL1, vL2, vL3, opcColPC, opcLinhaPC, 1);
+}
